@@ -27,16 +27,20 @@ def home():
 """
     
     for m in Message.select():
+        quote = m.content.replace('<', '&lt;').replace('>', '&gt;')
         body += """
 <div class="message">
 {}
 </div>
-""".format(m.content)
+""".format(quote)
 
     return body 
 
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 6738))
-    app.run(host='0.0.0.0', port=port)
+    host = os.environ.get("HOST", "127.0.0.1")
+    app.run(host=host, port=port)
+    
+#    app.run(host='0.0.0.0', port=port)
 
